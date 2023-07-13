@@ -2,12 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Arctic Monkeys Visualizer</title>
+    <style>
+      .btns {
+        position: absolute;
+        display: flex;
+        gap: 4rem;
+        width: 100%;
+        justify-content: space-around;
+        top: 1rem;
+      }
+
+      .btns > button {
+        color: white;
+        background-color: black;
+        padding: 1rem;
+        border-radius: 2rem;
+        border-color: white;
+        border: 2px solid #fefefe;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <canvas id="c"></canvas>
+    <div class="btns">
+      <button onclick="startRecording()">Start Recording</button>
+      <button onclick="stopRecording()">Stop Recording</button>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
