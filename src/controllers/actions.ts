@@ -1,6 +1,6 @@
+// @ts-ignore
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { camera, renderer } from "../environment/renderer";
-
 //__________________________________ WINDOW RESIZE _________________________________________
 
 function resizeRendererToDisplaySize(renderer: any) {
