@@ -1,8 +1,7 @@
 import "./style/main.css";
 import { scene, camera, renderer } from "./environment/renderer";
 import "./environment/paint";
-import "./controllers/listeners";
-import { actions } from "./controllers/actions";
+import { actions } from "./controllers/actions/main";
 
 let render = function () {
   actions();
