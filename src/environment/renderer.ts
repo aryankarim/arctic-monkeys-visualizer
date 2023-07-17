@@ -18,6 +18,7 @@ scene.add(light2);
 const canvas = document.querySelector("#c") as HTMLCanvasElement;
 const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
 renderer.setPixelRatio(window.devicePixelRatio);
+scene.background = new THREE.Color(0x0d1718);
 
 document.body.appendChild(renderer.domElement);
 

@@ -16,7 +16,7 @@ export class Camera {
       this.near,
       this.far
     );
-    camera.position.set(20, 0, 300);
+    camera.position.set(20, 0, 700);
 
     this.camera = camera;
   }
