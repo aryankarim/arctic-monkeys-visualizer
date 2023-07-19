@@ -4,14 +4,28 @@ import { Wave } from "../../entities/wave";
 
 const wave = new Wave();
 
-const moveWaves = (event: any) => {
-  const inputBuffer = event.inputBuffer;
-  const inputData = inputBuffer.getChannelData(0);
-  let random = Math.random() * 3;
+function calculateAverage(array: Array<number>) {
+  var total = 0;
+
+  array.forEach(function (item: number, index: number) {
+    total += item;
+  });
+
+  return total || 0;
+}
+
+let inputData: Array<number> = [];
+
+export const moveWaves = () => {
+  const newAmplitudeIntensity = calculateAverage(inputData);
+  console.log(newAmplitudeIntensity);
+
   for (let i = 0; i < wave.numPoints; i++) {
     wave.points[i].x = (i / wave.numPoints) * 4 * Math.PI;
     wave.points[i].y =
-      random * wave.amplitude * Math.sin(wave.frequency * wave.points[i].x);
+      newAmplitudeIntensity *
+      wave.amplitude *
+      Math.sin(newAmplitudeIntensity * 5 * wave.frequency * wave.points[i].x);
     wave.points[i].z = 0;
   }
 
@@ -27,4 +41,9 @@ const moveWaves = (event: any) => {
   wave.tubeMesh.geometry = wave.tubeGeometry; // Assign the new geometry to the mesh
 };
 
-assignLoop(moveWaves);
+const updateAudio = (event: any) => {
+  const inputBuffer = event.inputBuffer;
+  inputData = inputBuffer.getChannelData(0);
+};
+
+assignLoop(updateAudio);

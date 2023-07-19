@@ -1,6 +1,5 @@
 // @ts-ignore
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { bars, lines } from "../../entities/bars";
 
 //__________________________________ AUDIO _________________________________________
 
@@ -20,7 +19,7 @@ function startRecording() {
 
       audioSource = audioContext.createMediaStreamSource(stream);
 
-      scriptNode = audioContext.createScriptProcessor(bars, 1, 1);
+      scriptNode = audioContext.createScriptProcessor(256, 1, 1);
 
       scriptNode.onaudioprocess = processAudio;
 

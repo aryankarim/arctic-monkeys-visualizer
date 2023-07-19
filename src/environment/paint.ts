@@ -1,2 +1,1 @@
-// import "../controllers/listeners/microphone.ts";
-// import "../entities/bars";
+import "../controllers/listeners/microphone.ts";
