@@ -18,7 +18,6 @@ let inputData: Array<number> = [];
 
 export const moveWaves = () => {
   const newAmplitudeIntensity = calculateAverage(inputData);
-  console.log(newAmplitudeIntensity);
 
   for (let i = 0; i < wave.numPoints; i++) {
     wave.points[i].x = (i / wave.numPoints) * 4 * Math.PI;
