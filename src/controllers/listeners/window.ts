@@ -26,7 +26,7 @@ export const checkForResize = () => {
 
 export const controls = new OrbitControls(camera.camera, renderer.domElement);
 
-controls.target.set(0, 0, 0);
+controls.target.set(7, 0, 0);
 
 controls.update();
 controls.enablePan = false;

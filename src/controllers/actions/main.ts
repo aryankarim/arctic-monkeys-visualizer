@@ -1,4 +1,5 @@
 import { moveWaves } from "./moveWaves";
+
 import { checkForResize, controls } from "../listeners/window";
 
 export const actions = () => {
