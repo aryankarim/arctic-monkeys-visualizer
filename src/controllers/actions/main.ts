@@ -1,9 +1,8 @@
-import { moveWaves } from "./moveWaves";
-
-import { checkForResize, controls } from "../listeners/window";
+import { checkForResize, controls } from '../listeners/window'
+import { wave } from './moveWaves'
 
 export const actions = () => {
-  moveWaves();
-  checkForResize();
-  controls.update();
-};
+    wave.moveWaves()
+    checkForResize()
+    controls.update()
+}

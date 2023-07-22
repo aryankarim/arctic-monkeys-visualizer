@@ -1,51 +1,51 @@
 // @ts-ignore
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 //__________________________________ AUDIO _________________________________________
 
-let audioContext: any;
-let mediaStream: any;
-let audioSource: any;
-let scriptNode: any;
+let audioContext: any
+let mediaStream: any
+let audioSource: any
+let scriptNode: any
 
-let processAudio: Function;
+let processAudio: Function
 
 function startRecording() {
-  navigator.mediaDevices
-    .getUserMedia({ audio: true })
-    .then(function (stream) {
-      audioContext = new AudioContext();
-      mediaStream = stream;
+    navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then(function (stream) {
+            audioContext = new AudioContext()
+            mediaStream = stream
 
-      audioSource = audioContext.createMediaStreamSource(stream);
+            audioSource = audioContext.createMediaStreamSource(stream)
 
-      scriptNode = audioContext.createScriptProcessor(256, 1, 1);
+            scriptNode = audioContext.createScriptProcessor(256, 1, 1)
 
-      scriptNode.onaudioprocess = processAudio;
+            scriptNode.onaudioprocess = processAudio
 
-      audioSource.connect(scriptNode);
-      scriptNode.connect(audioContext.destination);
-    })
-    .catch(function (err) {
-      console.error("Error accessing microphone:", err);
-    });
+            audioSource.connect(scriptNode)
+            scriptNode.connect(audioContext.destination)
+        })
+        .catch(function (err) {
+            console.error('Error accessing microphone:', err)
+        })
 }
 
 function stopRecording() {
-  if (audioContext) {
-    audioSource.disconnect(scriptNode);
-    scriptNode.disconnect(audioContext.destination);
+    if (audioContext) {
+        audioSource.disconnect(scriptNode)
+        scriptNode.disconnect(audioContext.destination)
 
-    mediaStream.getTracks().forEach(function (track: any) {
-      track.stop();
-    });
-    audioContext.close();
-  }
+        mediaStream.getTracks().forEach(function (track: any) {
+            track.stop()
+        })
+        audioContext.close()
+    }
 }
 
 export function assignLoop(loop: Function) {
-  processAudio = loop;
+    processAudio = loop
 }
 
-(window as any).startRecording = startRecording;
-(window as any).stopRecording = stopRecording;
+;(window as any).startRecording = startRecording
+;(window as any).stopRecording = stopRecording
