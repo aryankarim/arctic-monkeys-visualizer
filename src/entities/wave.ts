@@ -5,10 +5,10 @@ import { scene } from '../environment/renderer'
 export class Wave {
     tubeGeometry: any
     tubeMesh: any
-    numPoints = 2000
-    amplitude = 0.00001
-    frequency = 10
-    radius = 0.04
+    numPoints = 4000
+    amplitude = 0.0001
+    frequency = 5
+    radius = 0.05
     inputData = []
     points: any = []
 
@@ -34,25 +34,19 @@ export class Wave {
 
     moveWaves() {
         const newAmplitudeIntensity = this.calculateAverage(this.inputData)
-
+        let index = -1
         for (let i = 0; i < this.numPoints; i++) {
-            // if (
-            //   i < Math.ceil(this.numPoints / 4) ||
-            //   i > Math.ceil((this.numPoints * 3) / 4)
-            // ) {
-            //   this.points[i].x = this.points[i].x;
-            //   this.points[i].y = 0;
-            //   continue;
-            // }
+            let section = (index * this.numPoints) / this.frequency / 100
+            let newAmplitude = newAmplitudeIntensity * this.amplitude * section
 
-            let newAmplitude =
-                (this.amplitude * (((i * this.numPoints) / this.frequency) * 2)) / 100
             let x = (i / this.numPoints) * 4 * Math.PI
-            let y =
-                newAmplitudeIntensity * newAmplitude * Math.sin(this.frequency * this.points[i].x)
+            let y = newAmplitude * Math.sin(this.frequency * this.points[i].x)
 
             this.points[i].x = x
             this.points[i].y = y
+
+            if (i > this.numPoints / 2) index++
+            else index--
         }
 
         // Recompute the tube geometry with the updated points
@@ -74,6 +68,6 @@ export class Wave {
             total += item
         })
 
-        return total || 0
+        return total || 1
     }
 }
