@@ -11,13 +11,17 @@ export class Wave {
     radius = 0.05
     inputData = []
     points: any = []
+    startingPos = 0
 
-    constructor() {
-        for (let i = 0; i < this.numPoints; i++) {
+    constructor(startinPos: number = 0) {
+        this.startingPos = startinPos
+
+        for (let i = this.startingPos; i < this.numPoints + this.startingPos; i++) {
             const x = (i / this.numPoints) * 4 * Math.PI
             const y = this.amplitude * Math.sin(this.frequency * x)
             this.points.push(new THREE.Vector3(x, y))
         }
+
         this.tubeGeometry = new THREE.TubeGeometry(
             new THREE.CatmullRomCurve3(this.points),
             this.numPoints - 1,
