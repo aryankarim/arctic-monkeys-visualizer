@@ -1,9 +1,8 @@
 import { checkForResize, controls } from '../listeners/window'
-import { wave, wave2 } from './moveWaves'
+import { wave } from './moveWaves'
 
 export const actions = () => {
     wave.moveWaves()
-    wave2.moveWaves()
     checkForResize()
     controls.update()
 }

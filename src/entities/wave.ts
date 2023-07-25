@@ -6,17 +6,16 @@ export class Wave {
     tubeGeometry: any
     tubeMesh: any
     numPoints = 4000
-    amplitude = 0.0001
+    amplitude = 0.000005
     frequency = 5
-    radius = 0.05
+    radius = 0.13
     inputData = []
     points: any = []
     startingPos = 0
+    ampIntensity = 0
 
-    constructor(startinPos: number = 0) {
-        this.startingPos = startinPos
-
-        for (let i = this.startingPos; i < this.numPoints + this.startingPos; i++) {
+    constructor() {
+        for (let i = 0; i < this.numPoints; i++) {
             const x = (i / this.numPoints) * 4 * Math.PI
             const y = this.amplitude * Math.sin(this.frequency * x)
             this.points.push(new THREE.Vector3(x, y))
@@ -30,7 +29,8 @@ export class Wave {
             false
         )
 
-        const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
+        const material = new THREE.MeshPhongMaterial({ color: 0xffffff, vertexColors: true })
+
         this.tubeMesh = new THREE.Mesh(this.tubeGeometry, material)
 
         scene.add(this.tubeMesh)
@@ -38,10 +38,13 @@ export class Wave {
 
     moveWaves() {
         const newAmplitudeIntensity = this.calculateAverage(this.inputData)
+
+        this.ampIntensity = newAmplitudeIntensity
+
         let index = -1
         for (let i = 0; i < this.numPoints; i++) {
             let section = (index * this.numPoints) / this.frequency / 100
-            let newAmplitude = newAmplitudeIntensity * this.amplitude * section
+            let newAmplitude = this.ampIntensity * this.amplitude * section
 
             let x = (i / this.numPoints) * 4 * Math.PI
             let y = newAmplitude * Math.sin(this.frequency * this.points[i].x)
@@ -65,13 +68,14 @@ export class Wave {
         this.tubeMesh.geometry = this.tubeGeometry // Assign the new geometry to the mesh
     }
 
+    // reduce code and take average instead total
     calculateAverage(array: Array<number>) {
         var total = 0
 
         array.forEach(function (item: number) {
-            total += item
+            total += Math.abs(item)
         })
 
-        return total || 1
+        return Math.abs(total * 3) || 1
     }
 }
