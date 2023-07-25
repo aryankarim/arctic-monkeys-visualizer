@@ -5,7 +5,7 @@ import { scene } from '../environment/renderer'
 export class Wave {
     tubeGeometry: any
     tubeMesh: any
-    numPoints = 4000
+    numPoints = 1000
     amplitude = 0.000005
     frequency = 5
     radius = 0.13
@@ -71,6 +71,6 @@ export class Wave {
 
     // reduce code and take average instead total
     calculateAverage(array: Array<number>) {
-        return Math.abs(array.reduce((sum, num) => sum + Math.abs(num), 0)) || 1
+        return Math.abs(array.reduce((sum, num) => sum + Math.abs(num), 0) * 3) || 1
     }
 }
