@@ -1,32 +1,32 @@
 // @ts-ignore
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { camera, renderer } from "../../environment/renderer";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { camera, renderer } from '../../environment/renderer'
 
 //__________________________________ WINDOW RESIZE _________________________________________
 function resizeRendererToDisplaySize(renderer: any) {
-  const canvas = renderer.domElement;
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
+    const canvas = renderer.domElement
+    const width = canvas.clientWidth
+    const height = canvas.clientHeight
 
-  const needResize = canvas.width !== width || canvas.height !== height;
-  if (needResize) {
-    renderer.setSize(width, height, false);
-  }
+    const needResize = canvas.width !== width || canvas.height !== height
+    if (needResize) {
+        renderer.setSize(width, height, false)
+    }
 
-  return needResize;
+    return needResize
 }
 
 export const checkForResize = () => {
-  if (resizeRendererToDisplaySize(renderer)) {
-    const canvas = renderer.domElement;
-    camera.camera.aspect = canvas.clientWidth / canvas.clientHeight;
-    camera.camera.updateProjectionMatrix();
-  }
-};
+    if (resizeRendererToDisplaySize(renderer)) {
+        const canvas = renderer.domElement
+        camera.camera.aspect = canvas.clientWidth / canvas.clientHeight
+        camera.camera.updateProjectionMatrix()
+    }
+}
 
-export const controls = new OrbitControls(camera.camera, renderer.domElement);
+export const controls = new OrbitControls(camera.camera, renderer.domElement)
 
-controls.target.set(5.5, 0, 0);
+controls.target.set(12, 0, 0)
 
-controls.update();
-controls.enablePan = false;
+controls.update()
+controls.enablePan = false

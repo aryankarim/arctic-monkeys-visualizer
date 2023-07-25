@@ -14,9 +14,10 @@ export class Wave {
     startingPos = 0
     ampIntensity = 0
 
-    constructor(startingPoint: number = 0) {
+    constructor(startingPos: number = 0) {
+        this.startingPos = startingPos
         for (let i = 0; i < this.numPoints; i++) {
-            const x = (i / this.numPoints) * 4 * Math.PI + startingPoint
+            const x = (i / this.numPoints) * 4 * Math.PI + this.startingPos
             const y = this.amplitude * Math.sin(this.frequency * x)
             this.points.push(new THREE.Vector3(x, y))
         }
@@ -49,7 +50,7 @@ export class Wave {
             let x = (i / this.numPoints) * 4 * Math.PI
             let y = newAmplitude * Math.sin(this.frequency * this.points[i].x)
 
-            this.points[i].x = x
+            this.points[i].x = x + this.startingPos
             this.points[i].y = y
 
             if (i > this.numPoints / 2) index++
