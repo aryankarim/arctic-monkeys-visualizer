@@ -14,9 +14,9 @@ export class Wave {
     startingPos = 0
     ampIntensity = 0
 
-    constructor() {
+    constructor(startingPoint: number = 0) {
         for (let i = 0; i < this.numPoints; i++) {
-            const x = (i / this.numPoints) * 4 * Math.PI
+            const x = (i / this.numPoints) * 4 * Math.PI + startingPoint
             const y = this.amplitude * Math.sin(this.frequency * x)
             this.points.push(new THREE.Vector3(x, y))
         }
@@ -29,7 +29,7 @@ export class Wave {
             false
         )
 
-        const material = new THREE.MeshPhongMaterial({ color: 0xffffff, vertexColors: true })
+        const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
 
         this.tubeMesh = new THREE.Mesh(this.tubeGeometry, material)
 
@@ -70,12 +70,6 @@ export class Wave {
 
     // reduce code and take average instead total
     calculateAverage(array: Array<number>) {
-        var total = 0
-
-        array.forEach(function (item: number) {
-            total += Math.abs(item)
-        })
-
-        return Math.abs(total * 3) || 1
+        return Math.abs(array.reduce((sum, num) => sum + Math.abs(num), 0)) || 1
     }
 }
