@@ -1,0 +1,35 @@
+.btns {
+    position: absolute;
+    display: flex;
+    gap: 4rem;
+    width: 100%;
+    justify-content: space-around;
+    top: 1rem;
+}
+
+.btns > button {
+    color: white;
+    background-color: lightgrey;
+    padding: 1rem;
+    border-radius: 100%;
+    border-color: white;
+    border: 2px solid #fefefe;
+}
+
+
+
+.dance{
+    animation: 1s dance infinite step-end;
+      
+}
+
+@keyframes dance {
+
+    0%{ 
+        transform: rotateY(0deg);
+    }
+    50%{ 
+        transform: rotateY(-180deg);
+    }
+  }
+  
