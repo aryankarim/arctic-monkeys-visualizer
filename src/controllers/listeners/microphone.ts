@@ -1,6 +1,3 @@
-// @ts-ignore
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-
 //__________________________________ AUDIO _________________________________________
 
 let audioContext: any
@@ -10,7 +7,9 @@ let scriptNode: any
 
 let processAudio: Function
 
-function startRecording() {
+export function startRecording() {
+    console.log(3)
+
     navigator.mediaDevices
         .getUserMedia({ audio: true })
         .then(function (stream) {
@@ -31,7 +30,7 @@ function startRecording() {
         })
 }
 
-function stopRecording() {
+export function stopRecording() {
     if (audioContext) {
         audioSource.disconnect(scriptNode)
         scriptNode.disconnect(audioContext.destination)
@@ -46,6 +45,3 @@ function stopRecording() {
 export function assignLoop(loop: Function) {
     processAudio = loop
 }
-
-;(window as any).startRecording = startRecording
-;(window as any).stopRecording = stopRecording
