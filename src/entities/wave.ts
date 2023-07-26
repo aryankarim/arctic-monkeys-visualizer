@@ -71,6 +71,6 @@ export class Wave {
 
     // reduce code and take average instead total
     calculateAverage(array: Array<number>) {
-        return Math.abs(array.reduce((sum, num) => sum + Math.abs(num), 0) * 3) || 1
+        return Math.abs(array.reduce((sum, num) => sum + Math.abs(num), 0) * 10) || 1
     }
 }
