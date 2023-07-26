@@ -17,10 +17,12 @@
 }
 
 
-
+ img {
+    width: 32px;
+    height: 32px;
+}
 .dance{
     animation: 1s dance infinite step-end;
-      
 }
 
 @keyframes dance {
