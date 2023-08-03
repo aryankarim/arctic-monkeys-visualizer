@@ -4,13 +4,18 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Arctic Monkeys Visualizer</title>
- 
-        <link rel="stylesheet" href="/public/main.css">
+
+        <link rel="stylesheet" href="/public/main.css" />
     </head>
     <body>
         <canvas id="c"></canvas>
         <div class="btns">
             <button id="startBtn"></button>
+            <button id="audioBtn"><img src="/knee-socks.png" alt="" /></button>
+            <audio id="audioEl" preload="auto">
+                <source src="/knee-socks.mp3" type="audio/mp3" />
+                Your browser does not support the audio element.
+            </audio>
         </div>
 
         <script type="module" src="/src/main.ts"></script>

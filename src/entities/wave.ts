@@ -5,8 +5,8 @@ import { scene } from '../environment/renderer'
 export class Wave {
     tubeGeometry: any
     tubeMesh: any
-    numPoints = 2000
-    amplitude = 0.000005
+    numPoints = 1500
+    amplitude = 0.000002
     frequency = 5
     radius = 0.13
     inputData = []

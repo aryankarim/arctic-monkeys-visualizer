@@ -14,24 +14,26 @@
     border-radius: 100%;
     border-color: white;
     border: 2px solid #fefefe;
+    width: 70px;
+    height: 70px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #0d1718;
 }
 
-
- img {
+img {
     width: 32px;
     height: 32px;
 }
-.dance{
+.dance {
     animation: 1s dance infinite step-end;
 }
 
 @keyframes dance {
-
-    0%{ 
+    0% {
         transform: rotateY(0deg);
     }
-    50%{ 
+    50% {
         transform: rotateY(-180deg);
     }
-  }
-  
+}

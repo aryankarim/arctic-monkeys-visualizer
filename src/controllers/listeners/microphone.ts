@@ -8,8 +8,6 @@ let scriptNode: any
 let processAudio: Function
 
 export function startRecording() {
-    console.log(3)
-
     navigator.mediaDevices
         .getUserMedia({ audio: true })
         .then(function (stream) {
