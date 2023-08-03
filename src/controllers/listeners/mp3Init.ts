@@ -15,10 +15,10 @@ function loadAudio(url: string, callback: Function) {
     request.onload = function () {
         audioContext.decodeAudioData(
             request.response,
-            function (buffer) {
+            function (buffer: any) {
                 callback(buffer)
             },
-            function (error) {
+            function (error: any) {
                 console.error('Error decoding audio data', error)
             }
         )
