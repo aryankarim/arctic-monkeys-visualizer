@@ -1,13 +1,14 @@
 .btns {
     position: absolute;
     display: flex;
-    gap: 4rem;
+    gap: 1rem;
     width: 100%;
     justify-content: space-around;
     top: 1rem;
+    flex-wrap: wrap;
 }
 
-.btns > button {
+button {
     color: white;
     background-color: lightgrey;
     padding: 1rem;
