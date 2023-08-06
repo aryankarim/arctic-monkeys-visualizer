@@ -5,24 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Arctic Monkeys Visualizer</title>
 
-        <link rel="stylesheet" href="/public/main.css" />
+        <link rel="stylesheet" href="/main.css" />
     </head>
     <body>
         <canvas id="c"></canvas>
         <div class="btns">
-            <button id="play-pause-btn"><img src="/play.png" alt="" /></button>
-            <button id="start-btn"><img src="/calm.png" alt="" /></button>
-            <button id="sock-btn"><img src="/sock.png" alt="" /></button>
-            <div>
-                <button id="stereo-btn"><img src="/stereo.png" alt="" /></button>
-                <button id="skipBtn"><img src="/skip.png" alt="" /></button>
+            <div class="list">
+                <button id="mic-btn"><img src="/calm.png" alt="" /></button>
+                <button id="play-pause-btn"><img src="/play.png" alt="" /></button>
+                <button id="shuffle-btn"><img src="/shuffle.png" alt="" /></button>
             </div>
-            <audio id="sock-audio-el" preload="auto">
-                <source src="/knee-socks.mp3" type="audio/mp3" />
-                Your browser does not support the audio element.
-            </audio>
-            <audio id="random-audio-el" preload="auto">
-                <source src="/knee-socks.mp3" type="audio/mp3" />
+            <audio id="radio-audio-el" preload="auto">
+                <source src="/1.mp3" type="audio/mp3" />
                 Your browser does not support the audio element.
             </audio>
         </div>

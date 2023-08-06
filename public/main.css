@@ -3,9 +3,14 @@
     display: flex;
     gap: 1rem;
     width: 100%;
-    justify-content: space-around;
+    justify-content: center;
     top: 1rem;
     flex-wrap: wrap;
+}
+
+.btns > .list {
+    display: flex;
+    gap: 1rem;
 }
 
 button {
@@ -20,6 +25,7 @@ button {
     font-size: 1rem;
     font-weight: bold;
     color: #0d1718;
+    
 }
 
 img {
@@ -37,4 +43,11 @@ img {
     50% {
         transform: rotateY(-180deg);
     }
+}
+
+
+button:disabled,
+button[disabled]{
+    border-color: gray;
+  background-color: gray;
 }

@@ -53,9 +53,7 @@ export const play = async (audioUrl: string) => {
 
 export function stop() {
     if (audioContext) {
-        scriptNode.disconnect(audioContext.destination)
-
-        audioContext.close()
+        audioContext.suspend()
     }
 }
 

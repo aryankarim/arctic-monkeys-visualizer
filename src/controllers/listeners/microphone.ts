@@ -30,13 +30,7 @@ export function startRecording() {
 
 export function stopRecording() {
     if (audioContext) {
-        audioSource.disconnect(scriptNode)
-        scriptNode.disconnect(audioContext.destination)
-
-        mediaStream.getTracks().forEach(function (track: any) {
-            track.stop()
-        })
-        audioContext.close()
+        audioContext.suspend()
     }
 }
 
