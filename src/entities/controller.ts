@@ -19,6 +19,21 @@ enum Player {
     pause = 'pause',
 }
 
+const shuffle = (array: Array<any>) => {
+    let currentIndex = array.length,
+        randomIndex
+
+    while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex)
+        currentIndex--
+        ;[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+    }
+
+    return array
+}
+
+const shuffledArray = shuffle(new Array(5).map((_, i) => i + 1))
+
 const stereo: {
     mode: Player
     playMp3: (cb: () => Promise<void>) => void
@@ -31,36 +46,24 @@ const stereo: {
     playMp3: (cb: () => Promise<void>) => {
         cb().then(() => {
             stereo.mode = Player.random
-            playOrPauseImg.setAttribute('src', '/pause.png')
-            shuffleBtn.disabled = true
-            micBtn.disabled = true
+            playActions()
         })
     },
     playMic: (cb: () => Promise<void>) => {
         cb().then(() => {
             stereo.mode = Player.mic
-            stereo.pausedMode = Player.mic
             micImg.setAttribute('src', '/dance.png')
-            playOrPauseImg.setAttribute('src', '/pause.png')
-            shuffleBtn.disabled = true
-            micBtn.disabled = true
+            playActions()
         })
     },
     pauseMp3: () => {
-        stereo.mode = Player.pause
         mp3Buffer.stop()
         radioAudioEl.pause()
-        shuffleBtn.disabled = false
-        micBtn.disabled = false
-        playOrPauseImg.setAttribute('src', '/play.png')
+        pauseActions()
     },
     pauseMic: () => {
-        stereo.mode = Player.pause
         mic.stopRecording()
-        shuffleBtn.disabled = false
-        micBtn.disabled = false
-        micImg.classList.remove('dance')
-        micImg.setAttribute('src', '/calm.png')
+        pauseActions()
     },
     pausedMode: Player.pause,
 }
@@ -75,14 +78,35 @@ const pressMic = () => {
 }
 
 // SHUFFLE
+
+let currentSongIndex = 0
 const pressShuffle = () => {
     return new Promise<void>(async (resolve, reject) => {
         if (stereo.mode == Player.random || stereo.mode == Player.mic) reject()
-        await mp3Buffer.play('/2.mp3')
-        radioAudioEl.setAttribute('src', '/2.mp3')
+
+        if (currentSongIndex + 1 > shuffledArray.length) currentSongIndex = 0
+        else currentSongIndex++
+
+        await mp3Buffer.play(`/${currentSongIndex}.mp3`)
+        radioAudioEl.setAttribute('src', `/${currentSongIndex}.mp3`)
         radioAudioEl.play()
         resolve()
     })
+}
+
+const pauseActions = () => {
+    stereo.mode = Player.pause
+    shuffleBtn.disabled = false
+    micBtn.disabled = false
+    micImg.classList.remove('dance')
+    micImg.setAttribute('src', '/calm.png')
+    playOrPauseImg.setAttribute('src', '/play.png')
+}
+
+const playActions = () => {
+    shuffleBtn.disabled = true
+    micBtn.disabled = true
+    playOrPauseImg.setAttribute('src', '/pause.png')
 }
 
 // PLAY OR PAUSE
