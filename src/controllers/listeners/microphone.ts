@@ -1,39 +1,27 @@
-//__________________________________ AUDIO _________________________________________
+export class Microphone {
+    audioContext: any
+    mediaStream: any
+    audioSource: any
+    scriptNode: any
+    processAudio: any
 
-let audioContext: any
-let mediaStream: any
-let audioSource: any
-let scriptNode: any
+    async startRecording() {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
 
-let processAudio: Function
-
-export function startRecording() {
-    navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then(function (stream) {
-            audioContext = new AudioContext()
-            mediaStream = stream
-
-            audioSource = audioContext.createMediaStreamSource(stream)
-
-            scriptNode = audioContext.createScriptProcessor(256, 1, 1)
-
-            scriptNode.onaudioprocess = processAudio
-
-            audioSource.connect(scriptNode)
-            scriptNode.connect(audioContext.destination)
-        })
-        .catch(function (err) {
-            console.error('Error accessing microphone:', err)
-        })
-}
-
-export function stopRecording() {
-    if (audioContext) {
-        audioContext.suspend()
+        this.audioContext = new AudioContext()
+        this.mediaStream = stream
+        this.audioSource = this.audioContext.createMediaStreamSource(stream)
+        this.scriptNode = this.audioContext.createScriptProcessor(256, 1, 1)
+        this.scriptNode.onaudioprocess = this.processAudio
+        this.audioSource.connect(this.scriptNode)
+        this.scriptNode.connect(this.audioContext.destination)
     }
-}
 
-export function assignLoop(loop: Function) {
-    processAudio = loop
+    stopRecording() {
+        if (this.audioContext) this.audioContext.suspend()
+    }
+
+    assignLoop(loop: Function) {
+        this.processAudio = loop
+    }
 }

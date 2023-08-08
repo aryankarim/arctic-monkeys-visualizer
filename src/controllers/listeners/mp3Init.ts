@@ -1,62 +1,58 @@
-let audioContext: any
+export class Mp3Buffer {
+    audioContext: any
+    scriptNode: any
+    processAudio: any
 
-let scriptNode: any
+    loadAudio(url: string, callback: Function) {
+        this.audioContext = new AudioContext()
+        const request = new XMLHttpRequest()
 
-let processAudio: Function
+        this.audioContext.resume()
+        request.open('GET', url, true)
+        request.responseType = 'arraybuffer'
 
-function loadAudio(url: string, callback: Function) {
-    audioContext = new AudioContext()
-    const request = new XMLHttpRequest()
+        request.onload = () => {
+            this.audioContext.decodeAudioData(
+                request.response,
+                function (buffer: any) {
+                    callback(buffer)
+                },
+                function (error: any) {
+                    console.error('Error decoding audio data', error)
+                }
+            )
+        }
 
-    audioContext.resume()
-    request.open('GET', url, true)
-    request.responseType = 'arraybuffer'
-
-    request.onload = function () {
-        audioContext.decodeAudioData(
-            request.response,
-            function (buffer: any) {
-                callback(buffer)
-            },
-            function (error: any) {
-                console.error('Error decoding audio data', error)
-            }
-        )
+        request.send()
     }
 
-    request.send()
-}
+    playAudio(buffer: any) {
+        const source = this.audioContext.createBufferSource()
+        source.buffer = buffer
 
-function playAudio(buffer: any) {
-    audioContext = new AudioContext()
+        this.scriptNode = this.audioContext.createScriptProcessor(256, 1, 1)
+        this.scriptNode.onaudioprocess = this.processAudio
 
-    const source = audioContext.createBufferSource()
-    source.buffer = buffer
+        source.connect(this.scriptNode)
+        this.scriptNode.connect(this.audioContext.destination)
 
-    scriptNode = audioContext.createScriptProcessor(256, 1, 1)
-    scriptNode.onaudioprocess = processAudio
+        source.start()
+    }
 
-    source.connect(scriptNode)
-    scriptNode.connect(audioContext.destination)
-
-    source.start()
-}
-
-export const play = async (audioUrl: string) => {
-    return new Promise((resolve) => {
-        loadAudio(audioUrl, function (buffer: any) {
-            playAudio(buffer)
-            resolve(1)
+    play(audioUrl: string) {
+        return new Promise((resolve) => {
+            this.loadAudio(audioUrl, (buffer: any) => {
+                this.playAudio(buffer)
+                resolve(1)
+            })
         })
-    })
-}
-
-export function stop() {
-    if (audioContext) {
-        audioContext.suspend()
     }
-}
 
-export function assignLoop(loop: Function) {
-    processAudio = loop
+    stop() {
+        if (this.audioContext) this.audioContext.suspend()
+    }
+
+    assignLoop(loop: Function) {
+        this.processAudio = loop
+    }
 }

@@ -1,5 +1,4 @@
-import { startRecording, stopRecording } from '../controllers/listeners/microphone'
-import { play, stop } from '../controllers/listeners/mp3Init'
+import { mic, mp3Buffer } from '../controllers/actions/moveWaves'
 
 // RADIO
 const radioAudioEl = document.getElementById('radio-audio-el') as HTMLAudioElement
@@ -49,12 +48,17 @@ const stereo: {
     },
     pauseMp3: () => {
         stereo.mode = Player.pause
-        stop()
-        playOrPauseImg.setAttribute('src', '/pause.png')
+        mp3Buffer.stop()
+        radioAudioEl.pause()
+        shuffleBtn.disabled = false
+        micBtn.disabled = false
+        playOrPauseImg.setAttribute('src', '/play.png')
     },
     pauseMic: () => {
         stereo.mode = Player.pause
-        stopRecording()
+        mic.stopRecording()
+        shuffleBtn.disabled = false
+        micBtn.disabled = false
         micImg.classList.remove('dance')
         micImg.setAttribute('src', '/calm.png')
     },
@@ -65,7 +69,7 @@ const stereo: {
 const pressMic = () => {
     return new Promise<void>((resolve, reject) => {
         if (stereo.mode == Player.mic || stereo.mode == Player.random) reject()
-        startRecording()
+        mic.startRecording()
         resolve()
     })
 }
@@ -74,7 +78,7 @@ const pressMic = () => {
 const pressShuffle = () => {
     return new Promise<void>(async (resolve, reject) => {
         if (stereo.mode == Player.random || stereo.mode == Player.mic) reject()
-        await play('/2.mp3')
+        await mp3Buffer.play('/2.mp3')
         radioAudioEl.setAttribute('src', '/2.mp3')
         radioAudioEl.play()
         resolve()

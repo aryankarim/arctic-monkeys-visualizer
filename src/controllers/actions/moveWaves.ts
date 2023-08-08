@@ -1,6 +1,9 @@
-import { assignLoop as assignStreamLoop } from '../listeners/microphone'
-import { assignLoop as assignMp3Loop } from '../listeners/mp3Init'
 import { Wave } from '../../entities/wave'
+import { Microphone } from '../listeners/microphone'
+import { Mp3Buffer } from '../listeners/mp3Init'
+
+export const mic = new Microphone()
+export const mp3Buffer = new Mp3Buffer()
 
 new Wave(-12.5)
 export const wave = new Wave()
@@ -19,5 +22,5 @@ const updateMp3Audio = (event: any) => {
     wave2.inputData = inputBuffer.getChannelData(0)
 }
 
-assignStreamLoop(updateStreamAudio)
-assignMp3Loop(updateMp3Audio)
+mic.assignLoop(updateStreamAudio)
+mp3Buffer.assignLoop(updateMp3Audio)
