@@ -17,6 +17,7 @@ enum Player {
     random = 'random',
     play = 'play',
     pause = 'pause',
+    unpause = 'unpause',
 }
 
 const shuffle = (array: Array<any>) => {
@@ -39,6 +40,7 @@ const stereo: {
     playMp3: (cb: () => Promise<void>) => void
     playMic: (cb: () => Promise<void>) => void
     pauseMp3: () => void
+    unpauseMp3: () => void
     pauseMic: () => void
     pausedMode: Player
 } = {
@@ -57,9 +59,14 @@ const stereo: {
         })
     },
     pauseMp3: () => {
-        mp3Buffer.stop()
+        mp3Buffer.pause()
         radioAudioEl.pause()
         pauseActions()
+    },
+    unpauseMp3: () => {
+        mp3Buffer.unpause()
+        radioAudioEl.play()
+        playActions()
     },
     pauseMic: () => {
         mic.stopRecording()
@@ -82,6 +89,7 @@ const pressMic = () => {
 let currentSongIndex = 0
 const pressShuffle = () => {
     return new Promise<void>(async (resolve, reject) => {
+        playActions()
         if (stereo.mode == Player.random || stereo.mode == Player.mic) reject()
 
         if (currentSongIndex + 1 > shuffledArray.length) currentSongIndex = 0
@@ -106,27 +114,37 @@ const pauseActions = () => {
 const playActions = () => {
     shuffleBtn.disabled = true
     micBtn.disabled = true
+    playPauseBtn.disabled = false
     playOrPauseImg.setAttribute('src', '/pause.png')
 }
 
 // PLAY OR PAUSE
 const pressPlayOrPause = () => {
-    console.log(stereo.mode, stereo.pausedMode)
-
-    if (stereo.mode == Player.mic) {
-        stereo.pauseMic()
-        return
-    }
     if (stereo.mode == Player.random) {
         stereo.pauseMp3()
+        stereo.mode = Player.pause
+        stereo.pausedMode = Player.random
         return
     }
     if (stereo.mode == Player.pause && stereo.pausedMode == Player.random) {
+        stereo.unpauseMp3()
+        stereo.mode = Player.unpause
+        stereo.pausedMode = Player.random
+        return
+    }
+    if (stereo.mode == Player.pause) {
         pressShuffle()
+        stereo.mode = Player.random
+        stereo.pausedMode = Player.random
+        return
     }
-    if (stereo.mode == Player.pause && stereo.pausedMode == Player.mic) {
-        pressMic()
+    if (stereo.mode == Player.unpause && stereo.pausedMode == Player.random) {
+        stereo.pauseMp3()
+        stereo.mode = Player.pause
+        stereo.pausedMode = Player.random
+        return
     }
+    console.log('none done', stereo.mode, stereo.pausedMode)
 }
 
 micBtn?.addEventListener('click', () => stereo.playMic(pressMic))

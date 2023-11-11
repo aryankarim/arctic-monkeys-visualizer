@@ -48,6 +48,20 @@ export class Mp3Buffer {
         })
     }
 
+    pause() {
+        return new Promise((resolve) => {
+            this.audioContext.suspend()
+            resolve(1)
+        })
+    }
+
+    unpause() {
+        return new Promise((resolve) => {
+            this.audioContext.resume()
+            resolve(1)
+        })
+    }
+
     stop() {
         if (this.audioContext) this.audioContext.suspend()
     }
